@@ -1,12 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/navbar';
-import { Footer} from './components/footer';
+import { Footer } from './components/footer';
 import CotacoesList from './components/cotacoesList';
 import StockDetails from './components/stockDetails';
 
 function App() {
   return (
-    <Router basename='cotacoes'>
+    <Router>
       <Navbar />
       <Routes>
         <Route
