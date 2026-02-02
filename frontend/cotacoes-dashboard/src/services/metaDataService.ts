@@ -1,7 +1,11 @@
 import axios from 'axios';
 import type { Sector, AssetType } from '../models/cotacoes';
 
-const API_URL = 'http://localhost:8080';
+const LOCAL_URL = import.meta.env.VITE_API_LOCAL;
+const PROD_URL = import.meta.env.VITE_API_PROD;   
+
+// Detecta se está rodando local ou produção
+const API_URL = window.location.hostname === "localhost" ? LOCAL_URL : PROD_URL;
 
 export const getSectors = async (): Promise<Sector[]> => {
   const response = await axios.get<{ sectors: Sector[] }>(

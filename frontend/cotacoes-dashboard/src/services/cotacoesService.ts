@@ -1,7 +1,14 @@
 import axios from 'axios';
 import type { Cotacao, CotacaoAPI, Sector, AssetType } from '../models/cotacoes';
 
-const API_URL = 'http://localhost:8080/cotacoes';
+const LOCAL_URL = import.meta.env.VITE_API_LOCAL;
+const PROD_URL = import.meta.env.VITE_API_PROD;   
+
+// Detecta se está rodando local ou produção
+const BASE_API_URL = window.location.hostname === "localhost" ? LOCAL_URL : PROD_URL;
+
+// Monta a URL completa para /stocks
+const API_URL = `${BASE_API_URL}/cotacoes`;
 
 interface GetCotacoesParams {
   sector?: Sector;
