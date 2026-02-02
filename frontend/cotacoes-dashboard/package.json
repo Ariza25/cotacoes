@@ -10,7 +10,6 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://Ariza25.github.io/cotacoes",
   "dependencies": {
     "axios": "^1.13.2",
     "dotenv": "^17.2.3",

@@ -9,16 +9,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="min-h-screen bg-gray-100">
-              <main className="max-w-7xl mx-auto px-6 py-8">
-                <CotacoesList />
-              </main>
-            </div>
-          }
-        />
+        <Route path="/" element={<CotacoesList />} />
         <Route path="/stock/:symbol" element={<StockDetails />} />
       </Routes>
       <Footer />
