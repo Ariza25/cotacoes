@@ -6,7 +6,7 @@ import StockDetails from './components/stockDetails';
 
 function App() {
   return (
-    <Router>
+    <Router basename='cotacoes'>
       <Navbar />
       <Routes>
         <Route
