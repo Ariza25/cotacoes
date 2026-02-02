@@ -10,7 +10,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route
-          path="/"
+          path="/cotacoes"
           element={
             <div className="min-h-screen bg-gray-100">
               <main className="max-w-7xl mx-auto px-6 py-8">
