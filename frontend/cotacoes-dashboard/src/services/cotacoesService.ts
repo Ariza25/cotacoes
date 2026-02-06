@@ -1,8 +1,9 @@
 import axios from 'axios';
 import type { Cotacao, CotacaoAPI, Sector, AssetType } from '../models/cotacoes';
 
-//const API_URL = 'https://cotacoes-2.onrender.com/cotacoes'
-const API_URL = 'https://localhost:8080/cotacoes'  
+const API_URL = 'https://cotacoes-2.onrender.com/cotacoes'
+//const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app/cotacoes'  
+
 //const API_URL = window.location.hostname === "localhost" ? 'http://localhost:8080/cotacoes' : PROD_URL;
 interface GetCotacoesParams {
   sector?: Sector;
