@@ -17,7 +17,10 @@ func SetupRouter(h Handlers) *gin.Engine {
 
 	// --- Middleware CORS ---
 	r.Use(cors.New(cors.Config{
-		AllowAllOrigins:  true,
+		AllowOrigins: []string{
+			"http://localhost:5173",
+			"https://cotacoes-hezj.onrender.com",
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
