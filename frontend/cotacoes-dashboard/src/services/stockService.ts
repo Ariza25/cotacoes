@@ -1,8 +1,8 @@
 import axios from 'axios';
 import type { Stock } from '../models/stock';
 
-//const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app/stocks';
-const API_URL = 'http://localhost:8080/stocks';
+const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app/stocks';
+//const API_URL = 'http://localhost:8080/stocks';
 
 // Criando instância do axios
 const api = axios.create({

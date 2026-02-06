@@ -1,8 +1,8 @@
 import axios from 'axios';
 import type { Sector, AssetType } from '../models/cotacoes';
 
-//const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app';
-const API_URL = 'http://localhost:8080'
+const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app';
+//const API_URL = 'http://localhost:8080'
 
 const api = axios.create({
   baseURL: API_URL,

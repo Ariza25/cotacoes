@@ -1,8 +1,8 @@
 import axios from 'axios';
 import type { Cotacao, CotacaoAPI, Sector, AssetType } from '../models/cotacoes';
 
-//const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app/cotacoes';
-const API_URL = 'http://localhost:8080/cotacoes';
+const API_URL = 'https://cotacoes-94952904116.europe-west1.run.app/cotacoes';
+//const API_URL = 'http://localhost:8080/cotacoes';
 
 interface Pagination {
   currentPage: number;
