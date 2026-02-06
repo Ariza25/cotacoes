@@ -10,6 +10,8 @@ interface CotacaoRowProps {
 export const CotacaoRow = React.memo(
   ({ c }: CotacaoRowProps) => {
     const navigate = useNavigate();
+    const [imgError, setImgError] = React.useState(false);
+    const logo = !imgError ? (c.logoURL || c.logourl || c.logo) : undefined;
     
     const handleClick = () => {
       navigate(`/stock/${c.ticker}`);
@@ -22,8 +24,13 @@ export const CotacaoRow = React.memo(
       >
         <td className="px-6 py-4">
           <div className="flex items-center gap-3">
-            {c.logoURL ? (
-              <img src={c.logoURL} alt={c.ticker} className="w-9 h-9 rounded-lg" />
+            {logo ? (
+              <img
+                src={logo}
+                alt={c.ticker}
+                className="w-9 h-9 rounded-lg"
+                onError={() => setImgError(true)}
+              />
             ) : (
               <div className="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">
                 {c.ticker.slice(0, 2)}

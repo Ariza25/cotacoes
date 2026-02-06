@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"cotacoes/internal/domain"
@@ -137,10 +138,13 @@ func (p *BrapiProvider) ListAllStocks(
 		if marketCap == 0 && raw.MarketCapAlt != 0 {
 			marketCap = raw.MarketCapAlt
 		}
-		// Logo: tenta logourl, depois logo
+		// Logo: tenta logourl, depois logo; se vier vazio ou placeholder, gera url pelo ticker
 		logo := raw.Logo
 		if logo == "" {
 			logo = raw.Logourl
+		}
+		if symbol != "" && (logo == "" || strings.Contains(strings.ToUpper(logo), "BRAPI.SVG")) {
+			logo = fmt.Sprintf("https://icons.brapi.dev/icons/%s.svg", strings.ToUpper(symbol))
 		}
 		return listItem{
 			Symbol:    symbol,
@@ -339,11 +343,4 @@ func (p *BrapiProvider) GetBySymbol(symbol, rangeParam, intervalParam string) (*
 		RegularMarketTime:     time.Now(),
 		RegularMarketDayRange: fmt.Sprintf("%.2f - %.2f", r.RegularMarketDayLow, r.RegularMarketDayHigh),
 	}, nil
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }

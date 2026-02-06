@@ -8,6 +8,8 @@ export interface Cotacao {
   marketCap?: number;
   volume?: number;
   logoURL?: string;
+  logo?: string;      // possíveis variações que chegam do backend
+  logourl?: string;
   atualizadoEm: string;
   sector: Sector;
   type?: AssetType;
@@ -21,7 +23,12 @@ export interface CotacaoAPI {
   change: number;
   market_cap: number;
   volume: number;
-  logo: string;
+  // Brapi às vezes devolve a URL do logo com chaves diferentes.
+  logo?: string;
+  logoURL?: string;
+  logoUrl?: string;
+  logo_url?: string;
+  logourl?: string;
   sector: Sector;
   type?: AssetType;
   atualizadoEm?: string;

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { Stock } from '../models/stock';
 
-const API_URL = 'https://cotacoes-2.onrender.com/stocks'
+//const API_URL = 'https://cotacoes-2.onrender.com/stocks'
+const API_URL = 'https://localhost:8080/stocks'  
 
 //const API_URL = window.location.hostname === "localhost" ? 'http://localhost:8080/stocks' : PROD_URL;
 interface GetStockParams {
