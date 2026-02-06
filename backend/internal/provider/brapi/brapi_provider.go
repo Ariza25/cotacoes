@@ -30,7 +30,7 @@ func NewBrapiProvider(apiKey string) *BrapiProvider {
 
 // ListAllStocks retorna os dados da rota /cotacoes (SEM filtro de setor)
 func (p *BrapiProvider) ListAllStocks(
-	sector, sortBy, sortOrder string,
+	sector, stockType, sortBy, sortOrder string,
 	page, perPage int,
 ) (*domain.AllStocksResponse, error) {
 
@@ -39,6 +39,7 @@ func (p *BrapiProvider) ListAllStocks(
 
 	params.Add("limit", strconv.Itoa(perPage))
 	params.Add("token", p.APIKey)
+	// A API brapi.dev não suporta filtro direto por tipo; guardamos para logging consistência
 
 	requestURL := fmt.Sprintf("%s?%s", baseURL, params.Encode())
 
@@ -146,6 +147,11 @@ func (p *BrapiProvider) ListAllStocks(
 		if symbol != "" && (logo == "" || strings.Contains(strings.ToUpper(logo), "BRAPI.SVG")) {
 			logo = fmt.Sprintf("https://icons.brapi.dev/icons/%s.svg", strings.ToUpper(symbol))
 		}
+		stockType := strings.ToLower(raw.Type)
+		if stockType == "bdr" {
+			stockType = "dr"
+		}
+
 		return listItem{
 			Symbol:    symbol,
 			Name:      name,
@@ -155,7 +161,7 @@ func (p *BrapiProvider) ListAllStocks(
 			MarketCap: marketCap,
 			Logo:      logo,
 			Sector:    raw.Sector,
-			Type:      raw.Type,
+			Type:      stockType,
 		}
 	}
 
@@ -235,6 +241,12 @@ func (p *BrapiProvider) ListAllStocks(
 		availableTypes = make([]string, 0, len(set))
 		for v := range set {
 			availableTypes = append(availableTypes, v)
+		}
+	}
+	// Normaliza tipos para usar "dr" em vez de "bdr"
+	for i, t := range availableTypes {
+		if strings.EqualFold(t, "bdr") {
+			availableTypes[i] = "dr"
 		}
 	}
 

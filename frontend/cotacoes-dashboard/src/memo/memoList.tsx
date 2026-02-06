@@ -22,7 +22,7 @@ export const CotacaoRow = React.memo(
         className="border-t hover:bg-gray-50 transition cursor-pointer"
         onClick={handleClick}
       >
-        <td className="px-6 py-4">
+        <td className="pl-8 pr-6 py-4">
           <div className="flex items-center gap-3">
             {logo ? (
               <img
@@ -61,7 +61,7 @@ export const CotacaoRow = React.memo(
 
       <td className="px-6 py-4">{c.volume?.toLocaleString() ?? '—'}</td>
 
-      <td className="px-6 py-4">{c.atualizadoEm ? formatDateBR(c.atualizadoEm) : '—'}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{c.atualizadoEm ? formatDateBR(c.atualizadoEm) : '—'}</td>
       </tr>
     );
   },

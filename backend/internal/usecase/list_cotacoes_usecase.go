@@ -13,9 +13,9 @@ func NewListCotacoesUseCase(repo domain.CotacoesRepository) *ListCotacoesUseCase
 // Execute retorna os dados da rota /cotacoes
 // Recebe filtro de setor + paginação
 func (uc *ListCotacoesUseCase) Execute(
-	sector *string,
+	sector, stockType *string,
 	page, perPage int,
 ) (*domain.AllStocksResponse, error) {
 
-	return uc.repo.ListAllStocks(sector, page, perPage)
+	return uc.repo.ListAllStocks(sector, stockType, page, perPage)
 }

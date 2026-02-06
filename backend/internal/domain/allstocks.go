@@ -39,7 +39,7 @@ type Pagination struct {
 
 type StockProvider interface {
 	ListAllStocks(
-		sector, sortBy, sortOrder string,
+		sector, stockType, sortBy, sortOrder string,
 		page, perPage int,
 	) (*AllStocksResponse, error)
 }

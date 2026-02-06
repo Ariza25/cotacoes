@@ -4,7 +4,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo / Nome */}
         <div className="text-xl font-bold">
-          📈 CotAções
+          📈 Cotações
         </div>
       </div>
     </header>

@@ -180,5 +180,5 @@ type StockRepository interface {
 }
 
 type CotacoesRepository interface {
-	ListAllStocks(sector *string, page, perPage int) (*AllStocksResponse, error)
+	ListAllStocks(sector, stockType *string, page, perPage int) (*AllStocksResponse, error)
 }

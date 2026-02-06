@@ -32,11 +32,20 @@ export const CotacoesList: React.FC = () => {
 
   const limit = 10;
 
-  // 🔹 Carrega setores e tipos
+  // 🔹 Carrega setores e tipos (tipos dependem do setor selecionado)
   useEffect(() => {
     getSectors().then(setSectors).catch(console.error);
-    getTypes().then(setTypes).catch(console.error);
   }, []);
+
+  useEffect(() => {
+    getTypes(filters.sector).then(typesResp => {
+      setTypes(typesResp);
+      // se tipo selecionado não existe mais para este setor, limpa
+      if (filters.type && !typesResp.includes(filters.type)) {
+        setFilters(f => ({ ...f, type: undefined }));
+      }
+    }).catch(console.error);
+  }, [filters.sector]);
 
   // 🔹 Busca cotações (backend)
   useEffect(() => {
@@ -47,7 +56,7 @@ export const CotacoesList: React.FC = () => {
       setError(null);
 
       try {
-        const results = await getCotacoesFiltradas({
+        const { cotacoes: results, pagination } = await getCotacoesFiltradas({
           ...filters,
           limit,
           page,
@@ -57,7 +66,7 @@ export const CotacoesList: React.FC = () => {
 
         if (mounted) {
           setCotacoes(results);
-          setTotalPages(Math.ceil(results.length / limit));
+          setTotalPages(pagination?.totalPages ?? 1);
         }
       } catch (err) {
         if (mounted) setError('Erro ao buscar cotações');
@@ -91,29 +100,31 @@ export const CotacoesList: React.FC = () => {
   };
 
   return (
-    <div className="overflow-x-auto relative">
+    <div className="overflow-x-auto relative px-4">
       {/* 🔹 Filtros */}
       <div className="flex justify-end mb-4 gap-4">
         <SortBySector
           value={filters.sector ?? ''}
           sectors={sectors}
-          onChange={(sector) =>
+          onChange={(sector) => {
+            setPage(1);
             setFilters(f => ({
               ...f,
               sector: sector || undefined,
-            }))
-          }
+            }));
+          }}
         />
 
         <SortByType
           value={filters.type ?? ''}
           types={types}
-          onChange={(type) =>
+          onChange={(type) => {
+            setPage(1);
             setFilters(f => ({
               ...f,
               type: type || undefined,
-            }))
-          }
+            }));
+          }}
         />
       </div>
 
@@ -122,7 +133,7 @@ export const CotacoesList: React.FC = () => {
         <table className="w-full bg-white rounded-xl shadow-sm">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-4 text-left">Ativo</th>
+              <th className="pl-8 pr-6 py-4 text-left">Ativo</th>
 
               {(['preco', 'change', 'marketCap', 'volume'] as const).map(col => (
                 <th
@@ -140,7 +151,7 @@ export const CotacoesList: React.FC = () => {
                 </th>
               ))}
 
-              <th className="px-6 py-4">Última atualização</th>
+              <th className="px-6 py-4 text-left whitespace-nowrap">Última atualização</th>
             </tr>
           </thead>
 

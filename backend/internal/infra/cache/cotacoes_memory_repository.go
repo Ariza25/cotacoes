@@ -4,6 +4,7 @@ import (
 	"cotacoes/internal/domain"
 	"cotacoes/internal/provider/brapi"
 	"log"
+	"strings"
 )
 
 type CotacoesBrapiRepo struct {
@@ -22,7 +23,7 @@ func NewCotacoesBrapiRepo(
 }
 
 func (r *CotacoesBrapiRepo) ListAllStocks(
-	sector *string,
+	sector, stockType *string,
 	page, perPage int,
 ) (*domain.AllStocksResponse, error) {
 
@@ -33,12 +34,17 @@ func (r *CotacoesBrapiRepo) ListAllStocks(
 	if sector != nil {
 		sectorValue = *sector
 	}
+	stockTypeValue := ""
+	if stockType != nil {
+		stockTypeValue = *stockType
+	}
 
-	log.Printf("🔎 Setor recebido: %s | Paginação: page=%d, perPage=%d", sectorValue, page, perPage)
+	log.Printf("🔎 Filtros: sector=%s type=%s | Paginação: page=%d, perPage=%d", sectorValue, stockTypeValue, page, perPage)
 
 	// Busca todos os dados da BRAPI (ou cache) para aplicar filtros e paginação localmente
 	data, err := r.Provider.ListAllStocks(
 		sectorValue,
+		stockTypeValue,
 		sortBy,
 		sortOrder,
 		1,
@@ -48,12 +54,21 @@ func (r *CotacoesBrapiRepo) ListAllStocks(
 
 		log.Println("✅ Dados vindos da BRAPI")
 
-		// 🔥 FILTRO LOCAL por setor (se especificado)
+		// 🔥 FILTRO LOCAL por setor/tipo (se especificado)
 		allStocks := data.Stocks
 		if sectorValue != "" {
 			filtered := make([]domain.StockListItem, 0)
 			for _, s := range data.Stocks {
 				if s.Sector == sectorValue {
+					filtered = append(filtered, s)
+				}
+			}
+			allStocks = filtered
+		}
+		if stockTypeValue != "" {
+			filtered := make([]domain.StockListItem, 0)
+			for _, s := range allStocks {
+				if strings.EqualFold(s.Type, stockTypeValue) {
 					filtered = append(filtered, s)
 				}
 			}
@@ -128,6 +143,15 @@ func (r *CotacoesBrapiRepo) ListAllStocks(
 			filtered := make([]domain.StockListItem, 0)
 			for _, s := range cached.Stocks {
 				if s.Sector == sectorValue {
+					filtered = append(filtered, s)
+				}
+			}
+			allStocks = filtered
+		}
+		if stockTypeValue != "" {
+			filtered := make([]domain.StockListItem, 0)
+			for _, s := range allStocks {
+				if strings.EqualFold(s.Type, stockTypeValue) {
 					filtered = append(filtered, s)
 				}
 			}

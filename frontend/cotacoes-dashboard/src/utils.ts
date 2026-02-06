@@ -23,7 +23,7 @@ export const formatPriceBR = (value: number) => {
 export const ASSET_TYPE_LABEL_PT: Record<AssetType, string> = {
   stock: 'Ações',
   fund: 'Fundos de Investimentos',
-  bdr: 'BDRs',
+  dr: 'BDRs',
 };
 
 export function getAssetLabel(

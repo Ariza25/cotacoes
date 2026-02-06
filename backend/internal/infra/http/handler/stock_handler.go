@@ -75,7 +75,14 @@ func (h *StockHandler) ListStocks(c *gin.Context) {
 		sector = &sectorQuery
 	}
 
-	result, err := h.ListCotacoesUC.Execute(sector, page, perPage)
+	// Filtro de tipo (opcional)
+	typeQuery := c.Query("type")
+	var stockType *string
+	if typeQuery != "" {
+		stockType = &typeQuery
+	}
+
+	result, err := h.ListCotacoesUC.Execute(sector, stockType, page, perPage)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

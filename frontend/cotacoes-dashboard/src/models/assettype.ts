@@ -1,1 +1,1 @@
-export type AssetType = 'stock' | 'fund' | 'bdr';
+export type AssetType = 'stock' | 'fund' | 'dr';

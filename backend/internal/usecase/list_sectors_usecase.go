@@ -12,7 +12,9 @@ func NewListSectorsUseCase(p domain.StockProvider) *ListSectorsUseCase {
 
 func (uc *ListSectorsUseCase) Execute() ([]string, error) {
 	resp, err := uc.provider.ListAllStocks(
-		"", "market_cap", "desc", 1, 200,
+		"", // setor
+		"", // tipo
+		"market_cap", "desc", 1, 200,
 	)
 	if err != nil {
 		return nil, err

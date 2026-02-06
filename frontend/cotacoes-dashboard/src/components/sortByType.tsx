@@ -6,13 +6,13 @@ import { getAssetLabel } from '../utils';
 interface SortByTypeProps {
   value: AssetType | '';
   onChange: (value: AssetType | '') => void;
-  types: AssetType[];
+  types?: AssetType[]; // <- Agora opcional
 }
 
 const SortByType: React.FC<SortByTypeProps> = ({
   value,
   onChange,
-  types,
+  types = [], // <- Fallback para array vazio
 }) => {
   return (
     <div className="relative w-64">
@@ -34,11 +34,12 @@ const SortByType: React.FC<SortByTypeProps> = ({
         <option value="">Tipo de ativo</option>
 
         {/* Map com labels amigáveis */}
-        {types.map((type) => (
-          <option key={type} value={type}>
-            {getAssetLabel(type)} {/* Aqui usamos a função */}
-          </option>
-        ))}
+        {types.length > 0 &&
+          types.map((type) => (
+            <option key={type} value={type}>
+              {getAssetLabel(type)}
+            </option>
+          ))}
       </select>
 
       {/* Seta à direita */}

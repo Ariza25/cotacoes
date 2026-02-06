@@ -6,13 +6,13 @@ import { getSectorLabel } from '../utils';
 interface SortBySectorProps {
   value: Sector | '';
   onChange: (value: Sector | '') => void;
-  sectors: Sector[];
+  sectors?: Sector[]; // Agora opcional
 }
 
 const SortBySector: React.FC<SortBySectorProps> = ({
   value,
   onChange,
-  sectors,
+  sectors = [], // Fallback para array vazio
 }) => {
   return (
     <div className="relative w-64">
@@ -31,14 +31,16 @@ const SortBySector: React.FC<SortBySectorProps> = ({
         "
       >
         {/* Placeholder */}
-        <option value="">Setores</option>
+        <option value="">Todos os Setores</option>
 
         {/* Map com labels amigáveis */}
-        {sectors.map((sector) => (
-          <option key={sector} value={sector}>
-            {getSectorLabel(sector)}
-          </option>
-        ))}
+        {sectors && sectors.length > 0 ? (
+          sectors.map((sector) => (
+            <option key={sector} value={sector}>
+              {getSectorLabel(sector)}
+            </option>
+          ))
+        ) : null}
       </select>
 
       {/* Seta à direita */}

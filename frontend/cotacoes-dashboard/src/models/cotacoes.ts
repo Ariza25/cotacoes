@@ -34,7 +34,7 @@ export interface CotacaoAPI {
   atualizadoEm?: string;
 }
 
-export type AssetType = 'stock' | 'fund' | 'bdr';
+export type AssetType = 'stock' | 'fund' | 'dr';
 
 export type Sector = | 'Retail Trade' | 'Energy Minerals' | 'Health Services' | 'Utilities' | 'Finance' | 'Consumer Services' | 'Consumer Non-Durables' | 'Non-Energy Minerals' | 'Commercial Services' | 'Distribution Services' | 'Transportation' | 'Technology Services' | 'Process Industries' | 'Communications' | 'Producer Manufacturing' | 'Miscellaneous' | 'Electronic Technology' | 'Industrial Services' | 'Health Technology' | 'Consumer Durables';
 

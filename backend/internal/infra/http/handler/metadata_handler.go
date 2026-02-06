@@ -40,7 +40,8 @@ func (h *MetadataHandler) ListSectors(c *gin.Context) {
 
 // GET /types
 func (h *MetadataHandler) ListTypes(c *gin.Context) {
-	types, err := h.ListTypesUC.Execute()
+	sector := c.Query("sector")
+	types, err := h.ListTypesUC.Execute(sector)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
