@@ -24,6 +24,7 @@ export const ASSET_TYPE_LABEL_PT: Record<AssetType, string> = {
   stock: 'Ações',
   fund: 'Fundos de Investimentos',
   dr: 'BDRs',
+  bdr: 'BDRs', 
 };
 
 export function getAssetLabel(
